@@ -36,6 +36,7 @@
                 <li class="list-group-item">Email {{ forloop.counter }}: {{ email.endereco }}</li>
               {% endfor %}
             </ul>
+            <a class='btn btn-primary' href="{% url 'editar_contato' contato.id %}">Editar</a>
           </div>
         </div>
       {% empty %}
