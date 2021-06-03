@@ -25,7 +25,7 @@
       <!-- Após mostrar todos os grupos da aplicação, vamos mostrar um botão que
       futuramente será utilizado para levar o usuário para página de criação
       de novos grupos. -->
-      <a class="btn btn-primary" href="#">+ Grupo</a>
+      <a class="btn btn-primary" href="{% url 'novo_grupo' %}">+ Grupo</a>
       <hr>
       <!-- Agora nós faremos um novo loop para mostrar os campos de email e de
       telefone. -->
@@ -79,8 +79,8 @@
       <p>
         <input class="btn btn-success" type="submit" value="Salvar">
         <a class="btn btn-danger" href="#">Excluir</a>
-        <a class="btn btn-primary" href="#">+ Número</a>
-        <a class="btn btn-primary" href="#">+ E-mail</a>
+        <a class="btn btn-primary" href="{% url 'novo_tel' contato.id %}">+ Número</a>
+        <a class="btn btn-primary" href="{% url 'novo_email' contato.id %}">+ E-mail</a>
       </p>
     </form>
   </div>

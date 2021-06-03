@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contato, Grupo
-from .forms import EditarContatoForm
+from .forms import EditarContatoForm, NovoGrupoForm, NovoTelForm, NovoEmailForm
 
 # Create your views here.
 def contatos_list_view(request):
@@ -53,8 +53,44 @@ def editar_contato(request, contato_id):
                     pass
                 else:
                     contato.grupos.remove(grupo)
-                    
+
             return redirect('contatos_list_view')
     else:
         form = EditarContatoForm(id=contato_id)
     return render(request, 'contatos/editar_contato.html', {'form':form, 'contato':contato})
+
+def novo_grupo_view(request):
+    if request.method == 'POST':
+        form = NovoGrupoForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('contatos_list_view')
+    else:
+        form = NovoGrupoForm()
+    return render(request, 'contatos/novo_grupo.html', {'form':form})
+
+def novo_tel_view(request, contato_id):
+    contato = get_object_or_404(Contato, id=contato_id)
+    if request.method == 'POST':
+        form = NovoTelForm(data=request.POST)
+        if form.is_valid():
+            novo_tel = form.save(commit=False)
+            novo_tel.contato = contato
+            novo_tel.save()
+            return redirect('editar_contato', contato_id=contato.id)
+    else:
+        form = NovoTelForm()
+    return render(request, 'contatos/novo_tel.html', {'form':form, 'contato':contato})
+
+def novo_email_view(request, contato_id):
+    contato = get_object_or_404(Contato, id=contato_id)
+    if request.method == 'POST':
+        form = NovoEmailForm(data=request.POST)
+        if form.is_valid():
+            novo_email = form.save(commit=False)
+            novo_email.contato = contato
+            novo_email.save()
+            return redirect('editar_contato', contato_id=contato.id)
+    else:
+        form = NovoEmailForm()
+    return render(request, 'contatos/novo_email.html', {'form':form, 'contato':contato})

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contato, Grupo
+from .models import Contato, Grupo, Telefone, Email
 
 class EditarContatoForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -33,3 +33,18 @@ class EditarContatoForm(forms.Form):
         if nome_contato in nomes_contatos:
             raise forms.ValidationError("O nome escolhido já está sendo utilizado.")
         return nome_contato
+
+class NovoGrupoForm(forms.ModelForm):
+    class Meta:
+        model = Grupo
+        fields = ('nome', 'descricao')
+
+class NovoTelForm(forms.ModelForm):
+    class Meta:
+        model = Telefone
+        fields = ('numero',)
+
+class NovoEmailForm(forms.ModelForm):
+    class Meta:
+        model = Email
+        fields = ('endereco',)
