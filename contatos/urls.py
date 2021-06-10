@@ -7,4 +7,7 @@ urlpatterns = [
     path('novo-grupo/', views.novo_grupo_view, name='novo_grupo'),
     path('<int:contato_id>/novo_tel/', views.novo_tel_view, name='novo_tel'),
     path('<int:contato_id>/novo_email/', views.novo_email_view, name='novo_email'),
+    path('<int:contato_id>/excluir/', views.excluir_contato_view, name='excluir_contato'),
+    path('<int:contato_id>/telefone/<label>/excluir/', views.excluir_telefone_view, name='excluir_telefone'),
+    path('<int:contato_id>/email/<label>/excluir/', views.excluir_email_view, name='excluir_email'),
 ]

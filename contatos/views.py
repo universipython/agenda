@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Contato, Grupo
+from .models import Contato, Grupo, Telefone, Email
 from .forms import EditarContatoForm, NovoGrupoForm, NovoTelForm, NovoEmailForm
 
 # Create your views here.
@@ -94,3 +94,24 @@ def novo_email_view(request, contato_id):
     else:
         form = NovoEmailForm()
     return render(request, 'contatos/novo_email.html', {'form':form, 'contato':contato})
+
+def excluir_contato_view(request, contato_id):
+    contato = get_object_or_404(Contato, id=contato_id)
+    contato.delete()
+    return redirect('contatos_list_view')
+
+def excluir_telefone_view(request, contato_id, label):
+    contato = get_object_or_404(Contato, id=contato_id)
+    telefone_seq = int(label.replace('Telefone ', '')) - 1
+    telefones_contato = Telefone.objects.filter(contato=contato)
+    telefone = telefones_contato[telefone_seq]
+    telefone.delete()
+    return redirect('editar_contato', contato_id=contato.id)
+
+def excluir_email_view(request, contato_id, label):
+    contato = get_object_or_404(Contato, id=contato_id)
+    email_seq = int(label.replace('Email ', '')) - 1
+    emails_contato = Email.objects.filter(contato=contato)
+    email = emails_contato[email_seq]
+    email.delete()
+    return redirect('editar_contato', contato_id=contato.id)
